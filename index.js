@@ -10,7 +10,7 @@ class APIFetcher extends EventEmitter {
 		if (!this.started)
 			this.started = true;
 		else
-			return new Error('API Fetching has already started');
+			throw new Error('API Fetching has already started');
 		
 		this.emit('debug', `Started API fetching`);
 		this.apis.forEach((api) => {
