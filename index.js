@@ -55,13 +55,14 @@ class APIFetcher extends EventEmitter {
 			res = api.customCalls(res);
 
 		this.emit('debug', `Received successful response from API: ${api.name}`);
-		this.emit(api.name, res);
+		this.emit(api.name, null, res);
 		if (api.refreshTime)
 			setTimeout(() => {this.callAPI(api)}, api.refreshTime);
 	}
 	
 	_handleErrorForAPI(api, error) {
-		this.emit('error', `Error fetching data for API: ${api.name} ${error}. Retrying in ${api.retryTime} ms.`);
+		this.emit('debug', `Error fetching data for API: ${api.name} ${error}. Retrying in ${api.retryTime} ms.`);
+		this.emit(api.name, error, null);
 		if (api.retryTime)
 			setTimeout(() => {this.callAPI(api)}, api.retryTime);
 	}

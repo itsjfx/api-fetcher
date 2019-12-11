@@ -62,13 +62,6 @@ const apis = [
 const apiFetcher = new APIFetcher(apis);
 
 /**
- * Logs any error for ANY api
- */
-apiFetcher.on('error', (err) => {
-	console.log(err);
-});
-
-/**
  * Good to see what's going on behind the scenes
  */
 apiFetcher.on('debug', (debug) => {
@@ -78,7 +71,17 @@ apiFetcher.on('debug', (debug) => {
 /**
  * Is the output of the response for a specific api
  */
-apiFetcher.on('Promise which is successful', (data) => {
+apiFetcher.on('Promise which is successful', (err, data) => {
+	if (err)
+		return console.log("Error ", err);
+
+	console.log("Got data", data);
+});
+
+apiFetcher.on('Promise which errors', (err, data) => {
+	if (err)
+		return console.log("Error ", err);
+		
 	console.log("Got data", data);
 });
 
