@@ -64,8 +64,8 @@ const apiFetcher = new APIFetcher(apis);
 /**
  * Good to see what's going on behind the scenes
  */
-apiFetcher.on('debug', (debug) => {
-	//console.log(debug);
+apiFetcher.on('log', (type, log) => {
+	//console.log(log);
 });
 
 /**

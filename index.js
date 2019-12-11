@@ -12,7 +12,7 @@ class APIFetcher extends EventEmitter {
 		else
 			throw new Error('API Fetching has already started');
 		
-		this.emit('debug', `Started API fetching`);
+		this.emit('log', 'debug', `Started API fetching`);
 		this.apis.forEach((api) => {
 			if (api.startDelay)
 				setTimeout(() => {this.callAPI(api)}, api.startDelay);
@@ -22,7 +22,7 @@ class APIFetcher extends EventEmitter {
 	}
 	
 	callAPI(api) {
-		this.emit('debug', `Calling API: ${api.name}`);
+		this.emit('log', 'debug', `Calling API: ${api.name}`);
 		if (api.call.type == 'promise') {
 			api.call.func()
 			.then((res) => {
@@ -54,14 +54,14 @@ class APIFetcher extends EventEmitter {
 		if (api.customCalls)
 			res = api.customCalls(res);
 
-		this.emit('debug', `Received successful response from API: ${api.name}`);
+		this.emit('log', 'success', `Received successful response from API: ${api.name}`);
 		this.emit(api.name, null, res);
 		if (api.refreshTime)
 			setTimeout(() => {this.callAPI(api)}, api.refreshTime);
 	}
 	
 	_handleErrorForAPI(api, error) {
-		this.emit('debug', `Error fetching data for API: ${api.name} ${error}. Retrying in ${api.retryTime} ms.`);
+		this.emit('log', 'error', `Error fetching data for API: ${api.name} ${error}. Retrying in ${api.retryTime} ms.`);
 		this.emit(api.name, error, null);
 		if (api.retryTime)
 			setTimeout(() => {this.callAPI(api)}, api.retryTime);
