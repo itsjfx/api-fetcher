@@ -1,6 +1,6 @@
 {
   "name": "@jfx/api-fetcher",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An API to automate fetching multiple APIs with refreshing",
   "main": "index.js",
   "scripts": {
